@@ -4,7 +4,7 @@
  * Plugin Name: Misspelling Reporter
  * Plugin URI: https://github.com/blobaugh/misspelling-reporter
  * Description: Allows users to highlight misspelled text and report to the site/article admins. Inspired by #BeachPress2013
- * Version: 0.6.3
+ * Version: 0.6.4
  * Author: Ben Lobaugh
  * Author URI: http://ben.lobaugh.net
  */
@@ -74,10 +74,16 @@ class Misspelt {
 	 */
 	public function ajax_report() {
 		$original_post_id = absint( $_POST['post_id'] );
+		$typo = sanitize_text_field( $_POST['selected'] ); 
+
+		if($this->typo_check( $original_post_id, $typo)){
+			_e( 'Misspelling Already Reported', 'missr' );
+			return; 
+		}
 		
 		$args = array(
 			'post_type' => 'missr_report',
-			'post_title' => sanitize_text_field( $_POST['selected'] ),
+			'post_title' => $typo,
 			'post_parent' => $original_post_id
 		);
 
@@ -114,6 +120,30 @@ class Misspelt {
 			wp_mail( $user->user_email, $subject, $body );
 
 		_e( 'Misspelling Reported', 'missr' );
+	}
+	
+	/**
+	 * Check for typo
+	 *
+	 * @since 0.6.3
+	 *
+	 * @param int $post_id The supplied post id.
+	 * @param string $typo The supplied typo.
+	 */
+	public function typo_check( $post_id, $typo ) {
+		// check if the typo has been submitted previously
+		$args = array(
+			's' => $typo,
+			'post_type' => 'missr_report',
+			'post_status' => 'draft',
+			'post_parent' => $post_id
+		); 
+		$typo_check = get_posts($args);
+
+		// if posts found return true 
+		if( $typo_check )
+			return true; 
+		
 	}
 
 } // Misspelt
