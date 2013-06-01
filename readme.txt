@@ -1,5 +1,5 @@
 === Misspelling Reporter ===
-Contributors: DrewAPicture, JustinSainton, blobaugh, jaffe75, thoronas, grantlandram, alexmansfield, jkudish, tannerm, Viper007Bond, jeremyfelt, pento
+Contributors: JustinSainton, blobaugh, jaffe75, thoronas, grantlandram, DrewAPicture, alexmansfield, jkudish, tannerm, Viper007Bond, jeremyfelt, pento, itsananderson
 Tags: report, misspell, misspelling reporter, typo, spell check, crowd source spelling
 Requires at least: 3.5
 Tested up to: 3.6
@@ -31,6 +31,13 @@ e.g.
 3. Fix spelling errors!
 
 == Changelog ==
+
+= 0.6.3 =
+* Updates to Arabic translation (DrewAPicture)
+* Classified
+* Fix JS potential XSS vulnerability (itsananderson)
+* General code cleanup to keep developers happy :)
+* New language translations: French, German, Spanish (DrewAPicture)
 
 = 0.6.2 =
 * Fixed issues causing wp minify to break (pento)
